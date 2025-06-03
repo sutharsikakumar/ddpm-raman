@@ -2,3 +2,9 @@
 __pycache__/
 *.py[cod]
 .vscode/
+
+*.save/
+*.wfc*
+*.igk*
+relax.out
+raman.out
