@@ -2,7 +2,7 @@
   calculation = 'scf'
   prefix = 'mos2_pristine'
   outdir = './out'
-  pseudo_dir = '/simulation/pseudo'
+  pseudo_dir = './pseudo'
 /
 &SYSTEM
   ibrav = 0
@@ -18,8 +18,8 @@
   conv_thr = 1.0e-6
 /
 ATOMIC_SPECIES
-  Mo  95.94  Mo.upf
-  S   32.06  S.upf
+  Mo  95.94  Mo.pbe-spn-kjpaw_psl.1.0.0.UPF
+  S   32.06  S.pbe-n-kjpaw_psl.1.0.0.UPF
 ATOMIC_POSITIONS {crystal}
   Mo  0.000000  0.000000  0.500000
   S   0.333333  0.666667  0.430000
