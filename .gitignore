@@ -13,3 +13,4 @@ RGDOS.dat
 supercell-*.lmp
 eig_*.yaml
 data.mos2
+.DS_Store
