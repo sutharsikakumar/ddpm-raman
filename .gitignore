@@ -1,0 +1,15 @@
+
+out/
+*.out
+*.log
+        
+FORCE_SETS
+RGDOS.dat
+*.png
+*.pdf
+
+*.save/
+
+supercell-*.lmp
+eig_*.yaml
+data.mos2

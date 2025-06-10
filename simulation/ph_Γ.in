@@ -1,0 +1,9 @@
+&inputph
+  tr2_ph = 1.0d-14
+  prefix = 'mos2_pristine'
+  outdir = './out'
+  ldisp  = .false.
+  lraman = .true.
+  epsil  = .true.
+/
+/ 0.0 0.0 0.0

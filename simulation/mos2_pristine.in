@@ -1,0 +1,32 @@
+&CONTROL
+  calculation = 'scf'
+  prefix = 'mos2_pristine'
+  outdir = './out'
+  pseudo_dir = './pseudo'
+/
+&SYSTEM
+  ibrav = 0
+  nat = 3
+  ntyp = 2
+  ecutwfc = 50.0
+  ecutrho = 400.0
+  occupations = 'smearing'
+  smearing = 'gaussian'
+  degauss = 0.02
+/
+&ELECTRONS
+  conv_thr = 1.0e-6
+/
+ATOMIC_SPECIES
+  Mo  95.94  Mo.pbe-spn-kjpaw_psl.1.0.0.UPF
+  S   32.06  S.pbe-n-kjpaw_psl.1.0.0.UPF
+ATOMIC_POSITIONS {crystal}
+  Mo  0.000000  0.000000  0.500000
+  S   0.333333  0.666667  0.430000
+  S   0.666667  0.333333  0.570000
+CELL_PARAMETERS {angstrom}
+  3.160  0.000  0.000
+  1.580  2.736  0.000
+  0.000  0.000 20.000
+K_POINTS {automatic}
+  5 5 1 0 0 0

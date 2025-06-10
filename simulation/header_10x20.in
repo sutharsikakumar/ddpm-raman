@@ -1,0 +1,12 @@
+&control
+  calculation='scf', prefix='mos2_sc', outdir='./out', pseudo_dir='./pseudo'
+  tprnfor=.true.
+/
+&system
+  ibrav=0, nat=600, ntyp=2,
+  ecutwfc=50.0, ecutrho=400.0,
+  occupations='smearing', smearing='gaussian', degauss=0.02
+/
+&electrons
+  conv_thr=1.0d-8
+/
