@@ -24,9 +24,8 @@ class DDPMTrainer:
         self.alphas     = 1.0 - betas
         self.alphas_cum = torch.cumprod(self.alphas, 0)
 
-        self.ckpt_path = None   # caller sets this
+        self.ckpt_path = None 
 
-    # ------------------------------------------------------------------ #
     def step(self, x0):
         t   = torch.randint(0, self.n_steps, (x0.size(0),), device=self.device)
         a_t = self.alphas_cum[t][:, None, None]
@@ -38,7 +37,6 @@ class DDPMTrainer:
         self.opt.zero_grad(); loss.backward(); self.opt.step()
         return loss.item()
 
-    # ------------------------------------------------------------------ #
     def fit(self, epochs):
         for ep in range(epochs):
             epoch_loss = n = 0
@@ -48,8 +46,8 @@ class DDPMTrainer:
             print(f"[{self.label}] epoch {ep+1}/{epochs}  "
                   f"loss {avg:.4f}  batches {n}")
 
-        # checkpoint once per label
+   
         if self.ckpt_path:
             self.ckpt_path.parent.mkdir(parents=True, exist_ok=True)
             torch.save(self.model.state_dict(), self.ckpt_path)
-            print(f"✅ checkpoint saved → {self.ckpt_path}")
+            print(f"checkpoint saved → {self.ckpt_path}")

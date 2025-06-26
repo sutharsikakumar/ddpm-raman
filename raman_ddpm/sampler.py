@@ -17,4 +17,4 @@ def sample_spectra(ckpt, n_samples=8, n_steps=50, device="cpu"):
         x = (1 / a_t.sqrt()) * (x - (1 - a_t).sqrt() * eps)
         if i:
             x += betas[i].sqrt() * torch.randn_like(x)
-    return (x + 1) / 2        # back to 0-1 scale
+    return (x + 1) / 2   

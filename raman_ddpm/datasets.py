@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional          # ←  NEW
+from typing import Optional
 import numpy as np, torch
 from torch.utils.data import Dataset
 
@@ -11,7 +11,7 @@ class RamanDataset(Dataset):
     If label is None → multi-class mode (returns x, y)
     If label='BP'    → single-class subset (returns x, 0)
     """
-    def __init__(self, folder: str, label: Optional[str] = None):   # ← EDIT
+    def __init__(self, folder: str, label: Optional[str] = None):
         folder = Path(folder)
         if label is None:
             self.files = sorted(folder.glob('*.npy'))

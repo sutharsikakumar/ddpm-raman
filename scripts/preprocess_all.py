@@ -24,13 +24,12 @@ for folder in RAW_FOLDERS:
         except Exception as e:
             count_bad += 1
             bad_list.append(f"{fp.name} → {e}")
-            # comment-out the next line if you don’t want the long trace
-            # traceback.print_exc()
+
             continue
 
-print(f"✅  Saved {count_ok} spectra to {OUT_DIR}")
-print(f"⚠️   Skipped {count_bad} malformed files (see bad_files.log)")
+print(f"Saved {count_ok} spectra to {OUT_DIR}")
+print(f"Skipped {count_bad} malformed files (see bad_files.log)")
 
-# write the list once for later inspection
+
 with open("bad_files.log", "w") as fh:
     fh.write("\n".join(bad_list))

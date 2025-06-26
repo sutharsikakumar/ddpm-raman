@@ -9,8 +9,8 @@ DEVICE = "mps" if torch.backends.mps.is_available() else "cpu"
 p = argparse.ArgumentParser(); p.add_argument("--epochs", type=int, default=40)
 args = p.parse_args()
 
-real_ds  = RamanDataset("data/processed")                 # multi-class mode
-synth_ds = RamanDataset("data/synthetic")                 # will recurse labels
+real_ds  = RamanDataset("data/processed")               
+synth_ds = RamanDataset("data/synthetic")             
 
 full = ConcatDataset([real_ds, synth_ds])
 n_val = int(0.2 * len(full))

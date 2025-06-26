@@ -15,17 +15,14 @@ import pandas as pd
 from scipy.interpolate import UnivariateSpline
 
 TARGET_RANGE = (50, 1750)
-N_SAMPLES = 571  # Qi et al. use 571 points
+N_SAMPLES = 571 
 
-# ---------------------------------------------------------------------------
-# 1 · generic spectrum reader
-# ---------------------------------------------------------------------------
 def _read_generic(fp: Path) -> pd.DataFrame:
     """
     Return a DataFrame with columns ['shift', 'intensity'].
     Auto-handles RRUFF .txt and MLROD .csv variations.
     """
-    if fp.suffix == ".txt":                                    # ----- RRUFF
+    if fp.suffix == ".txt":                               
         rows = []
         with open(fp) as fh:
             for line in fh:
@@ -35,12 +32,12 @@ def _read_generic(fp: Path) -> pd.DataFrame:
                 try:
                     rows.append((float(parts[0]), float(parts[1])))
                 except ValueError:
-                    continue                                   # skip headers
+                    continue                    
         df = pd.DataFrame(rows, columns=["shift", "intensity"])
 
-    else:                                                      # ----- MLROD
+    else:                      
         try:
-            df = pd.read_csv(fp, engine="python")              # tolerate ragged rows
+            df = pd.read_csv(fp, engine="python")  
         except pd.errors.ParserError:
             # fallback: whitespace-delimited (rare)
             df = pd.read_table(fp, engine="python")
@@ -53,7 +50,6 @@ def _read_generic(fp: Path) -> pd.DataFrame:
             columns={shift_col: "shift", inten_col: "intensity"}
         )
 
-    # ---- enforce strictly increasing x ------------------------------------
     df = (
         df.dropna()
           .sort_values("shift", kind="mergesort")
@@ -63,9 +59,6 @@ def _read_generic(fp: Path) -> pd.DataFrame:
     return df
 
 
-# ---------------------------------------------------------------------------
-# 2 · interpolate + normalise
-# ---------------------------------------------------------------------------
 def interp_and_norm(fp: Path) -> np.ndarray:
     df = _read_generic(fp)
     if len(df) < 4:
@@ -74,6 +67,6 @@ def interp_and_norm(fp: Path) -> np.ndarray:
     grid = np.linspace(*TARGET_RANGE, N_SAMPLES)
     y_u = UnivariateSpline(df["shift"], df["intensity"], s=0)(grid)
 
-    # min-max → 0-1  (NumPy ≥ 2.0 safe)
+
     y_u = (y_u - y_u.min()) / np.ptp(y_u)
     return y_u.astype("float32")
