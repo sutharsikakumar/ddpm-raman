@@ -1,0 +1,21 @@
+# --- core scientific stack ---
+numpy>=1.25
+pandas>=2.2
+
+# plotting / sanity-check visuals
+matplotlib>=3.8
+seaborn>=0.13
+
+# machine-learning utilities
+scikit-learn>=1.4
+umap-learn>=0.5
+joblib>=1.4
+tqdm>=4.66
+
+# deep-learning (CPU / Apple-Silicon wheel)
+torch>=2.2
+torchvision>=0.17
+torchaudio>=2.2
+
+# optional but handy for training logs
+tensorboard>=2.15
