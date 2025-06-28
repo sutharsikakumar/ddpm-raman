@@ -17,4 +17,6 @@ python train_classifier.py --config configs/cnn.yaml
 
 python evaluate.py --ckpt runs/cnn_ddpm.pth
 
-<img src="adamite.png" width="600">
+## 2. Example figures
+
+![Soft-max confidence (scaled)](images/valid.png)
