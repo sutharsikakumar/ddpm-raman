@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 """
 Visual sanity checks
 ────────────────────
@@ -11,21 +11,19 @@ from pathlib import Path
 from collections import defaultdict
 
 import matplotlib
-matplotlib.use("Agg")                  # always write PNGs, never pop a window
+matplotlib.use("Agg")            
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.manifold import TSNE
 
-# ╭──────────────────── adjustable constants ─────────────────────╮
-REAL_ROOT = Path("data/processed")      # flat dir of real .npy
-SYN_ROOT  = Path("data/synthetic")      # sub-dirs or flat
-WN        = np.linspace(50, 1750, 571)  # Raman-shift grid
-SUBSAMPLE = 120                         # spectra/class for t-SNE
+
+REAL_ROOT = Path("data/processed")   
+SYN_ROOT  = Path("data/synthetic")    
+WN        = np.linspace(50, 1750, 571) 
+SUBSAMPLE = 120                        
 RESULTS   = Path("results"); RESULTS.mkdir(exist_ok=True)
-# ╰────────────────────────────────────────────────────────────────╯
 
 
-# ─── Helpers ───────────────────────────────────────────────────────
 def collect_real(root: Path):
     d = defaultdict(list)
     for f in root.glob("*.npy"):
@@ -46,7 +44,6 @@ def load_stack(files):
     return np.stack([np.load(f, mmap_mode="r").reshape(-1) for f in files])
 
 
-# ─── Gather real & synthetic file lists ───────────────────────────
 real_dict = collect_real(REAL_ROOT)
 syn_dict  = collect_syn(SYN_ROOT)
 common    = sorted(set(real_dict) & set(syn_dict))
@@ -55,7 +52,6 @@ if not common:
     print("✖  No mineral has both real AND synthetic spectra. Exiting.")
     sys.exit(0)
 
-# ─── 1) Overlay plots ─────────────────────────────────────────────
 for cls in common:
     try:
         real_stack = load_stack(real_dict[cls])
@@ -85,7 +81,6 @@ for cls in common:
         continue   # move on to next mineral
 
 
-# ─── 2) t-SNE on the remaining good classes ───────────────────────
 good_classes = [cls for cls in common
                 if (RESULTS / f"overlay_{cls}.png").exists()]
 

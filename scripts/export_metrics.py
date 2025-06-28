@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 Export loss/accuracy curves from the newest TensorBoard run
 that actually contains scalar data.
@@ -14,7 +13,6 @@ run_dirs = sorted([p for p in RUNS.iterdir() if p.is_dir()])
 if not run_dirs:
     raise SystemExit("No runs/* folders found.")
 
-# iterate newest → oldest until we find one with scalar tags
 ea = None
 for run in reversed(run_dirs):
     if not any(run.glob("events.out.tfevents.*")):
@@ -22,7 +20,7 @@ for run in reversed(run_dirs):
     ea_tmp = event_accumulator.EventAccumulator(run.as_posix(),
                                                 size_guidance={'scalars': 0})
     ea_tmp.Reload()
-    if ea_tmp.Tags()["scalars"]:      # non-empty list?
+    if ea_tmp.Tags()["scalars"]:
         ea = ea_tmp
         print("Using run:", run.name)
         break
@@ -53,4 +51,4 @@ data = {
 out = Path("results/metrics_by_epoch.csv")
 out.parent.mkdir(exist_ok=True)
 pd.DataFrame(data).to_csv(out, index=False)
-print("✓ CSV written to", out)
+print("CSV written to", out)

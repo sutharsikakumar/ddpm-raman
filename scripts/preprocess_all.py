@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 from pathlib import Path
 import numpy as np, traceback
 from raman_ddpm.interp_norm import interp_and_norm
