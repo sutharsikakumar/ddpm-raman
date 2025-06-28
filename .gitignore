@@ -17,6 +17,7 @@ data/processed/
 data/synthetic/
 data/mlrod/raw_csv/
 bad_files.log
+runs/
 out/
 *.out
 *.log

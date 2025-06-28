@@ -3,17 +3,12 @@ import numpy as np, torch, sys
 from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import train_test_split
 
-# ------------------------------------------------------------------
-# constants you can tweak
-# ------------------------------------------------------------------
-REAL_ROOT = Path("data/processed")   # flat:  Class__*.npy
-SYN_ROOT  = Path("data/synthetic")   # folders: synthetic/Class/*.npy
-N_REAL    = 5                    # real spectra per class
-N_SYN     = 5                   # synthetic spectra per class
 
-# ------------------------------------------------------------------
-# helper to gather and balance file lists
-# ------------------------------------------------------------------
+REAL_ROOT = Path("data/processed")  
+SYN_ROOT  = Path("data/synthetic")  
+N_REAL    = 10                   
+N_SYN     = 10 
+
 def _gather_files():
     """
     Build a dict {class: (real_files, syn_files)}.
@@ -24,8 +19,8 @@ def _gather_files():
     table = {}
 
     for cls in sorted({p.name for p in SYN_ROOT.iterdir() if p.is_dir()}):
-        real = list(REAL_ROOT.glob(f"{cls}__*.npy"))      # flat real files
-        syn  = list((SYN_ROOT / cls).glob("*.npy"))       # synthetic folder
+        real = list(REAL_ROOT.glob(f"{cls}__*.npy"))    
+        syn  = list((SYN_ROOT / cls).glob("*.npy"))
 
         if len(real) < N_REAL or len(syn) < N_SYN:
             print(f"[skip] {cls:<25s} real={len(real):3d}  syn={len(syn):3d}")
@@ -37,9 +32,6 @@ def _gather_files():
         )
     return table
 
-# ------------------------------------------------------------------
-# balanced Dataset
-# ------------------------------------------------------------------
 class RamanDataset(Dataset):
     """
     Balanced Raman dataset.
@@ -60,35 +52,26 @@ class RamanDataset(Dataset):
         X_all = np.asarray(X_all, np.float32)
         y_all = np.asarray(y_all, np.int64)
 
-        # -----------------------------------------------------------
-        # train / test split (skip if test_size == 0)
-        # -----------------------------------------------------------
         if test_size and test_size > 0.0:
             X_tr, X_te, y_tr, y_te = train_test_split(
                 X_all, y_all, test_size=test_size, stratify=y_all,
                 random_state=random_state)
             self.X, self.y = (X_tr, y_tr) if split == "train" else (X_te, y_te)
         else:
-            self.X, self.y = X_all, y_all    # caller will split later
+            self.X, self.y = X_all, y_all 
 
-    # torch Dataset API
+
     def __len__(self):          return len(self.X)
     def __getitem__(self, idx): return torch.from_numpy(self.X[idx]), int(self.y[idx])
 
-# ------------------------------------------------------------------
-# convenience loader factory
-# ------------------------------------------------------------------
 def get_loaders(batch=32, **kw):
     train_ds = RamanDataset(split="train", **kw)
     test_ds  = RamanDataset(split="test",  **kw)
     return (DataLoader(train_ds, batch,   shuffle=True,  num_workers=2),
             DataLoader(test_ds,  batch*2, shuffle=False, num_workers=2))
 
-# ------------------------------------------------------------------
-# legacy compatibility shims
-# ------------------------------------------------------------------
 def discover_labels():
     """Return list of mineral names in the balanced dataset (train split)."""
     return list(RamanDataset(split="train", test_size=0.0).cls_to_idx.keys())
 
-sys.modules['raman_ddpm.datasets'] = sys.modules[__name__]  # old import path
+sys.modules['raman_ddpm.datasets'] = sys.modules[__name__] 
