@@ -17,4 +17,4 @@ python train_classifier.py --config configs/cnn.yaml
 
 python evaluate.py --ckpt runs/cnn_ddpm.pth
 
-<img src="results/overlay_Adamite.png" width="600">
+<img src="adamite.png" width="600">
