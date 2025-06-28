@@ -14,12 +14,12 @@ results/conf_matrix_subset.png   – row-normalised heat-map
 
 
 SUBSET_NAMES = [  
-    "Quartz", "Calcite", "Forsterite", "Tremolite", "Anhydrite",
-    "Dolomite", "Gypsum", "Halite", "Hematite", "Goethite",
-    "Magnetite", "Pyrite", "Siderite", "Aragonite", "Albite",
-    "Kyanite", "Muscovite", "Hematite", "Goethite", "Magnetite", "Pyrite",
+    #"Quartz", "Calcite", "Forsterite", "Tremolite", "Anhydrite",
+    #"Dolomite", "Gypsum", "Halite", "Hematite", "Goethite",
+    #"Magnetite", "Pyrite", "Siderite", "Aragonite", "Albite",
+    #"Kyanite", "Muscovite", "Hematite", "Goethite", "Magnetite", "Pyrite",
 ]
-TOP_N = 0            
+TOP_N = 266           
 
 from pathlib import Path
 import numpy as np, pandas as pd, matplotlib.pyplot as plt, torch

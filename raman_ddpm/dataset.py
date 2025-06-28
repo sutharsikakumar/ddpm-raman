@@ -6,8 +6,8 @@ from sklearn.model_selection import train_test_split
 
 REAL_ROOT = Path("data/processed")  
 SYN_ROOT  = Path("data/synthetic")  
-N_REAL    = 10                   
-N_SYN     = 10 
+N_REAL    = 50                   
+N_SYN     = 50
 
 def _gather_files():
     """
