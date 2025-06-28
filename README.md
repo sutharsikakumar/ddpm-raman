@@ -19,4 +19,4 @@ python evaluate.py --ckpt runs/cnn_ddpm.pth
 
 ## 2. Example figures
 
-![Soft-max confidence (scaled)](images/valid.png)
+![Soft-max confidence (scaled)](public/valid.png)
